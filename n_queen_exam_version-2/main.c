@@ -5,31 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmoulin <fmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 12:50:22 by fmoulin           #+#    #+#             */
-/*   Updated: 2025/08/25 17:05:28 by fmoulin          ###   ########.fr       */
+/*   Created: 2025/08/25 12:13:39 by fmoulin           #+#    #+#             */
+/*   Updated: 2025/08/25 17:05:57 by fmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
 
-void	clean_board(int **board, int n)
-{
-	int	i;
-	
-	i = 0;
-	while (i < n)
-	{
-		free(board[i]);
-		i++;
-	}
-	free(board);
-}
-
 int	**create_board(int n)
 {
-	int	row;
-	int **board;
+	int	**board;
+	int row;
 	
 	board = malloc(sizeof(int *) * n);
 	if (!board)
@@ -38,16 +25,18 @@ int	**create_board(int n)
 	while (row < n)
 	{
 		board[row] = malloc(sizeof(int) * n);
+		if (!board[row])
+			return (0);
 		row++;
 	}
-	return (board);	
+	return (board);
 }
 
-void	board_init(int **board, int	n)
+void	board_init(int **board, int n)
 {
 	int	i;
-	int j;
-		
+	int	j;
+
 	i = 0;
 	while (i < n)
 	{
@@ -61,10 +50,23 @@ void	board_init(int **board, int	n)
 	}
 }
 
+void	clean_board(int **board, int n)
+{
+	int row;
+
+	row = 0;
+	while (row < n)
+	{
+		free(board[row]);
+		row++;
+	}
+	free(board);
+}
+
 int	is_safe(int **board, int row, int col)
 {
 	int i;
-	int	j;
+	int j;
 
 	i = 0;
 	while (i < row)
@@ -84,7 +86,7 @@ int	is_safe(int **board, int row, int col)
 	}
 	i = row - 1;
 	j = col + 1;
-	while (i >= 0 && j >= 0)
+	while (i >= 0)
 	{
 		if (board[i][j] == 1)
 			return (0);
@@ -97,12 +99,10 @@ int	is_safe(int **board, int row, int col)
 void	display_solution(int **board, int n)
 {
 	int	*tab;
-	int i;
-	int j;
-	
+	int	i;
+	int	j;
+
 	tab = malloc(sizeof(int) * n);
-	if (!tab)
-		return ;
 	i = 0;
 	while (i < n)
 	{
@@ -110,16 +110,13 @@ void	display_solution(int **board, int n)
 		while (j < n)
 		{
 			if (board[i][j] == 1)
-			{
 				tab[i] = j;
-				break ;
-			}
 			j++;
 		}
 		i++;
 	}
 	i = 0;
-	while (i < n)
+	while ( i < n)
 	{
 		printf("%d ", tab[i]);
 		i++;
@@ -128,9 +125,9 @@ void	display_solution(int **board, int n)
 	free(tab);
 }
 
-void	solve(int **board, int row, int n)
+void	solve(int **board, int n, int row)
 {
-	int	col;
+	int col;
 	
 	if (row == n)
 	{
@@ -143,7 +140,7 @@ void	solve(int **board, int row, int n)
 		if (is_safe(board, row, col))
 		{
 			board[row][col] = 1;
-			solve(board, row + 1, n);
+			solve(board, n, row + 1);
 			board[row][col] = 0;
 		}
 		col++;
@@ -155,12 +152,12 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		int	n;
-		int	**board;
-
+		int **board;
+		
 		n = atoi(argv[1]);
 		board = create_board(n);
 		board_init(board, n);
-		solve(board, 0, n);
+		solve(board, n, 0);
 		clean_board(board, n);
 	}
 	else
