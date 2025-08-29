@@ -1,0 +1,20 @@
+ex00: Broken GNL
+	fix a shitty GNL
+
+ex01: Permutations
+
+Write a programme that takes a string of letters, and prints every possible permutaion in alphabetical order
+-->Pas de doublon sur les lettres !!!
+
+$>./permutation abc
+abc
+acb
+bac
+bca
+cab
+cba
+$>./permutation ba
+ab
+ba
+$>./permutation
+$>
