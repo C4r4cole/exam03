@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   filter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ale-coss <ale-coss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fmoulin <fmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 22:42:57 by ale-coss          #+#    #+#             */
-/*   Updated: 2025/08/28 16:15:36 by ale-coss         ###   ########.fr       */
+/*   Updated: 2025/09/01 18:25:47 by fmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int filter(char *keyword)
 	ret[0] = 0; //met un /0 dedans;
 	while (1)
 	{
-		n = read(0, &buffer, rand() % 10);
+		n = read(0, buffer, 10);
 		if (n == -1)
 			return (0);
 		if (n == 0)
