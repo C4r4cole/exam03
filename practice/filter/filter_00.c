@@ -6,7 +6,7 @@
 /*   By: fmoulin <fmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 16:58:00 by fmoulin           #+#    #+#             */
-/*   Updated: 2025/09/01 19:09:20 by fmoulin          ###   ########.fr       */
+/*   Updated: 2025/09/02 18:32:02 by fmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ int	filter(char *keyword)
 	{
 		n = read(0, buf, 5);
 		if (n == -1)
-			return (0);
+		{
+			write(2, "Error: coucou", 13);
+			return (1);
+		}
 		if (n == 0)
 			break ;
 		buf[n] = '\0';
@@ -88,7 +91,7 @@ int	filter(char *keyword)
 			i++;
 	}
 	puts(result);
-	return (1);
+	return (0);
 }
 
 int	main(int argc, char **argv)
