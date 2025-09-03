@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   powerset_02.c                                      :+:      :+:    :+:   */
+/*   powerset_03.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmoulin <fmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/03 14:42:27 by fmoulin           #+#    #+#             */
-/*   Updated: 2025/09/03 15:03:45 by fmoulin          ###   ########.fr       */
+/*   Created: 2025/09/03 15:08:03 by fmoulin           #+#    #+#             */
+/*   Updated: 2025/09/03 15:19:55 by fmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
 
-void	print_res(char **set)
+void print_res(char **set)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (set[i])
@@ -30,8 +30,8 @@ void	print_res(char **set)
 
 int	is_valid(char *target, char **set)
 {
-	int	sum;
-	int	i;
+	int sum;
+	int i;
 
 	sum = 0;
 	i = 0;
@@ -43,11 +43,11 @@ int	is_valid(char *target, char **set)
 	return (sum == atoi(target));
 }
 
-void powerset(char *target, char **numbers, int nbr_len, char **set, int depth, int index)
+void	powerset(char *target, char **numbers, int nbr_len, char **set, int depth, int index)
 {
 	if (index == nbr_len)
 	{
-		set[depth] = NULL; // ultra important pour terminer chaque tableau valide par un NULL
+		set[depth] = NULL;
 		if (is_valid(target, set))
 			print_res(set);
 		return ;
@@ -68,6 +68,7 @@ int	main(int argc, char **argv)
 	set = malloc(sizeof(char *) * (nbr_len + 1));
 	if (!set)
 		return (1);
+	set[0] = NULL;
 	powerset(argv[1], argv + 2, nbr_len, set, 0, 0);
 	free(set);
 }
